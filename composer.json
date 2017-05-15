@@ -1,0 +1,24 @@
+{
+    "name": "poirot/cor-foundation"
+    , "description": "Poirot Foundation Core Module."
+    , "authors": [
+        {
+            "name": "Payam Naderi"
+            , "email": "naderi.payam@gmail.com"
+        }
+    ]
+    , "require": {
+        "poirot/skeleton": "dev-devel"
+        , "poirot/stream": "dev-devel"
+        , "poirot/client-oauth2": "dev-devel"
+        , "poirot/mod-driver_mongo": "dev-devel"
+    }
+    , "autoload"  : {
+        "psr-4": {
+            "Module\\Foundation\\": "src/"
+        }
+        , "files": [
+            "src/_ioc-facade.php"
+        ]
+    }
+}
