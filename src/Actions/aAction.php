@@ -3,8 +3,7 @@ namespace Module\Foundation\Actions;
 
 use Poirot\Application\Interfaces\Sapi\iSapiServer;
 use Poirot\Application\Sapi\Module\ContainerForFeatureActions;
-use Poirot\Application\SapiCli;
-use Poirot\Application\SapiHttp;
+use Poirot\Application\Sapi;
 use Poirot\Ioc\Container;
 use Poirot\Ioc\Interfaces\iContainer;
 use Poirot\Ioc\Interfaces\Respec\iServicesAware;
@@ -54,7 +53,7 @@ abstract class aAction
     /**
      * Sapi Server
      *
-     * @return iSapiServer|SapiHttp|SapiCli
+     * @return iSapiServer|Sapi
      */
     function sapi()
     {
