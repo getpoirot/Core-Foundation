@@ -64,7 +64,7 @@ namespace Module\Foundation
          */
         function initConfig(iDataEntity $config)
         {
-            return \Poirot\Config\load(__DIR__ . '/../../config/cor-foundation');
+            return \Poirot\Config\load(__DIR__ . '/../config/cor-foundation');
         }
 
         /**
@@ -83,7 +83,7 @@ namespace Module\Foundation
          */
         function initServiceManager(Container $services)
         {
-            return \Poirot\Config\load(__DIR__ . '/../../config/cor-foundation.servicemanager');
+            return \Poirot\Config\load(__DIR__ . '/../config/cor-foundation.servicemanager');
         }
 
         /**
@@ -100,7 +100,7 @@ namespace Module\Foundation
          */
         function getServices(Container $moduleContainer = null)
         {
-            return \Poirot\Config\load(__DIR__ . '/../../config/cor-foundation.services');
+            return \Poirot\Config\load(__DIR__ . '/../config/cor-foundation.services');
         }
 
         /**
