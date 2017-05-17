@@ -21,7 +21,7 @@ class PathAction
     /** @var string Last invoked path name */
     protected $__lastInvokedPath;
     /** @var string Last invoked uri */
-    protected $__lastInvokedUri;
+    protected $__lastInvokedUri = "";
     
     /** @var DataEntity */
     protected $params;

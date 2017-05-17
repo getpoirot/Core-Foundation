@@ -45,10 +45,10 @@ class ServiceViewModelResolver
         $config   = $services->get('/sapi');
         $config   = $config->config();
         /** @var DataEntity $config */
-        $config   = $config->get( self::class, [] );
+        $config   = $config->get( self::CONF, [] );
 
-        if ( isset($config[self::CONF]) )
-            $loader->with( $loader::parseWith($config[self::CONF]), true );
+        if (! empty($config) )
+            $loader->with( $loader::parseWith($config), true );
 
 
         return $loader;

@@ -16,12 +16,7 @@ use Poirot\Std\Type\StdArray;
 class PathService
     extends aServiceContainer
 {
-    const CONF_KEY = 'module.foundation.path-service';
-    
-    const PARAM_SERVER_URL = 'serverUrl';
-    const PARAM_BASE_PATH  = 'basePath';
-    const PARAM_BASE_URL   = 'baseUrl';
-    
+    const CONF = 'module.foundation.path-service';
          
     /**
      * @var string Service Name
@@ -43,7 +38,7 @@ class PathService
         /** @var DataEntity $config */
         $services = $this->services();
         $config = $services->get('/sapi')->config();
-        $config = $config->get(self::CONF_KEY, array());
+        $config = $config->get(self::CONF, array());
         // strip null values from config
         $stdTrav = new StdArray($config);
         $config  = $stdTrav->withWalk(function($val) {
