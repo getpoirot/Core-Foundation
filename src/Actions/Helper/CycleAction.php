@@ -1,8 +1,6 @@
 <?php
 namespace Module\Foundation\Actions\Helper;
 
-use Module\Foundation\Actions\aAction;
-
 /*
 <div class="row">
     <?php foreach ($events as $event) { ?>
@@ -19,7 +17,6 @@ use Module\Foundation\Actions\aAction;
  */
 
 class CycleAction 
-    extends aAction
 {
     protected static $_cycle_actions = array(
         # $action_unique_identifier =>

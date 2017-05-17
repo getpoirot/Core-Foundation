@@ -2,7 +2,7 @@
 use Module\Foundation\ServiceManager\ServiceViewModelResolver;
 
 return [
-    ServiceViewModelResolver::CONF_KEY => [
+    ServiceViewModelResolver::CONF => [
         /*
          * > Setup Aggregate Loader
          *   Options:

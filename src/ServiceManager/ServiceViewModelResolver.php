@@ -13,7 +13,7 @@ use Poirot\Std\Struct\DataEntity;
 class ServiceViewModelResolver
     extends aServiceContainer
 {
-    const CONF_KEY = 'resolver';
+    const CONF = 'resolver';
 
 
     /**
@@ -47,8 +47,8 @@ class ServiceViewModelResolver
         /** @var DataEntity $config */
         $config   = $config->get( self::class, [] );
 
-        if ( isset($config[self::CONF_KEY]) )
-            $loader->with( $loader::parseWith($config[self::CONF_KEY]), true );
+        if ( isset($config[self::CONF]) )
+            $loader->with( $loader::parseWith($config[self::CONF]), true );
 
 
         return $loader;

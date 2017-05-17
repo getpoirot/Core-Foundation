@@ -1,17 +1,17 @@
 <?php
-use Module\Foundation\ServiceManager\ViewModelRenderer;
 use Poirot\Ioc\Container\Service\ServiceInstance;
+use Poirot\View\ViewModel\RendererPhp;
 
 
 return [
     'implementations' => [
-        'viewModel'         => \Poirot\View\Interfaces\iViewModelPermutation::class,
-        'viewModelRenderer' => \Poirot\View\Interfaces\iViewRenderer::class,
-        'viewModelResolver' => \Poirot\Loader\LoaderAggregate::class,
+        'ViewModel'         => \Poirot\View\Interfaces\iViewModelPermutation::class,
+        'ViewModelRenderer' => \Poirot\View\Interfaces\iViewRenderer::class,
+        'ViewModelResolver' => \Poirot\Loader\LoaderAggregate::class,
     ],
     'services' => [
         \Module\Foundation\ServiceManager\ServiceViewModel::class,
-            new ServiceInstance('viewModelRenderer', ViewModelRenderer::class),
+            new ServiceInstance('viewModelRenderer', RendererPhp::class),
             \Module\Foundation\ServiceManager\ServiceViewModelResolver::class,
     ],
 ];
