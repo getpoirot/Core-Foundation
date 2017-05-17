@@ -7,9 +7,9 @@ use Poirot\View\ViewModelTemplate;
 /*
  * Render View Templates
  *
- * echo $this->action()->view('template', ['var' => $value])
+ * echo \Module\Foundation::view('template', ['var' => $value])
  *
- * $this->action()->view()->setTemplate('template')->render()
+ * \Module\Foundation::view()->setTemplate('template')->render()
  */
 
 class ViewAction 
