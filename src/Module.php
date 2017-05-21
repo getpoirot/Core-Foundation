@@ -1,8 +1,6 @@
 <?php
 namespace Module\Foundation
 {
-    use Module\Foundation\Actions;
-    use Module\Foundation\Services;
     use Poirot\Application\Interfaces\Sapi\iSapiModule;
     use Poirot\Application\Interfaces\Sapi;
     use Poirot\Application\Sapi\Module\ContainerForFeatureActions;
@@ -15,16 +13,7 @@ namespace Module\Foundation
 
     use Module\Foundation\Actions\BuildContainerActionOfFoundationModule;
 
-    use Module\Foundation\Actions\Helper\CycleAction;
-    use Module\Foundation\Services\PathService\PathAction;
-    use Module\Foundation\Actions\Helper\ViewAction;
 
-
-    /**
-     * @method static ViewAction         view($template = null, $variables = null)
-     * @method static PathAction         path($pathString = null, $variables = array())
-     * @method static CycleAction        cycle($action = null, $steps = 1, $reset = true)
-     */
     class Module implements iSapiModule
         , Sapi\Module\Feature\iFeatureModuleAutoload
         , Sapi\Module\Feature\iFeatureModuleInitServices
@@ -116,51 +105,30 @@ namespace Module\Foundation
         {
             return new BuildContainerActionOfFoundationModule;
         }
-
-
-        // ..
-
-        /**
-         * Proxy Call To Actions
-         *
-         * @param $name
-         * @param array $arguments
-         *
-         * @return mixed
-         */
-        static function __callStatic($name, array $arguments)
-        {
-            return call_user_func_array([Actions\IOC::class, $name], $arguments);
-        }
-
-        /**
-         * Retrieve Module Service
-         *
-         * @param string $get
-         *
-         * @return mixed
-         */
-        static function services($get, $options = null)
-        {
-            return call_user_func([Services\IOC::class, $get], $options);
-        }
     }
 }
 
 
-namespace Module\Foundation\Actions
+namespace Module\Foundation
 {
-    class IOC extends \IOC
-    { }
-}
-
-namespace Module\Foundation\Services
-{
+    use Module\Foundation\Actions\Helper\CycleAction;
+    use Module\Foundation\Actions\Helper\ViewAction;
     use Module\Foundation\Services\PathService\PathAction;
 
     /**
+     * @method static ViewAction         view($template = null, $variables = null)
+     * @method static PathAction         path($pathString = null, $variables = array())
+     * @method static CycleAction        cycle($action = null, $steps = 1, $reset = true)
+     */
+    class Actions extends \IOC
+    { }
+}
+
+namespace Module\Foundation
+{
+    /**
      * @method static PathAction Path()
      */
-    class IOC extends \IOC
+    class Services extends \IOC
     { }
 }

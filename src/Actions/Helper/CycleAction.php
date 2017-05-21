@@ -4,11 +4,11 @@ namespace Module\Foundation\Actions\Helper;
 /*
 <div class="row">
     <?php foreach ($events as $event) { ?>
-    <?php $cycle = \Module\Foundation\Module::cycle('<div class="col-md-4"> <!-- START -->', [1, 3]) ?>
+    <?php $cycle = \Module\Foundation\Actions::cycle('<div class="col-md-4"> <!-- START -->', [1, 3]) ?>
         <blockquote>
             <p><strong><?php echo $event->repo->name; ?>:</strong> <?php echo $event->payload->message; ?></p>
         </blockquote>
-    <?php $cycle = \Module\Foundation\Module::cycle('</div> <!-- END -->', [$cycle, 3]) ?>
+    <?php $cycle = \Module\Foundation\Actions::cycle('</div> <!-- END -->', [$cycle, 3]) ?>
     <?php } ?>
     <?php if ($cycle->getCounter() !== 3) { ?>
         </div> <!-- END -->

@@ -1,6 +1,6 @@
 <?php
+use Module\Foundation\ServiceManager\ViewModelRenderer;
 use Poirot\Ioc\Container\Service\ServiceInstance;
-use Poirot\View\ViewModel\RendererPhp;
 
 
 return [
@@ -11,7 +11,7 @@ return [
     ],
     'services' => [
         \Module\Foundation\ServiceManager\ServiceViewModel::class,
-            new ServiceInstance('viewModelRenderer', RendererPhp::class),
+            new ServiceInstance('viewModelRenderer', ViewModelRenderer::class),
             \Module\Foundation\ServiceManager\ServiceViewModelResolver::class,
     ],
 ];

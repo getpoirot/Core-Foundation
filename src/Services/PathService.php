@@ -11,7 +11,7 @@ use Poirot\Std\Type\StdArray;
  * Detect Server Url, BasePath, BaseUrl
  * can retrieved as a service
  *
- * PathAction \Module\Foundation\Module::Path()->assemble('$baseUrl');
+ * PathAction \Module\Foundation\Actions::Path()->assemble('$baseUrl');
  */
 class PathService
     extends aServiceContainer
