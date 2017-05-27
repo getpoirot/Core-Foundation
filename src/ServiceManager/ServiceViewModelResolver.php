@@ -26,7 +26,7 @@ class ServiceViewModelResolver
     /**
      * Create Service
      *
-     * @return mixed
+     * @return LoaderAggregate
      */
     function newService()
     {
