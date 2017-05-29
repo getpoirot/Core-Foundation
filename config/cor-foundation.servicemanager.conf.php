@@ -5,7 +5,7 @@ use Poirot\Ioc\Container\Service\ServiceInstance;
 
 return [
     'implementations' => [
-        'ViewModel'         => \Poirot\View\Interfaces\iViewModelPermutation::class,
+        'ViewModel'         => \Poirot\View\Interfaces\iViewModel::class,
         'ViewModelRenderer' => \Poirot\View\Interfaces\iViewRenderer::class,
         'ViewModelResolver' => \Poirot\Loader\LoaderAggregate::class,
     ],
