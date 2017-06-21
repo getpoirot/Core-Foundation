@@ -34,7 +34,7 @@ class ServiceViewModel
 
         # PHP Step as first step of view Renderer:
 
-        $bind = DecorateViewModel::New(
+        $bind = DecorateViewModel::of(
             clone $view
             , $this->_funcDelegateRender()
             , $this->_funcAssertResult()
@@ -51,7 +51,7 @@ class ServiceViewModel
             return $result;
         });
 
-        $view = DecorateViewModel::New($view)
+        $view = DecorateViewModel::of($view)
             ->bind($bind, 1000); // render before all others children
 
         return $view;
