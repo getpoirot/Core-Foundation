@@ -11,7 +11,7 @@ return [
     ],
     'services' => [
         \Module\Foundation\ServiceManager\ServiceViewModel::class,
-            new ServiceInstance('viewModelRenderer', ViewModelRenderer::class),
+            'viewModelRenderer' => ViewModelRenderer::class,
             \Module\Foundation\ServiceManager\ServiceViewModelResolver::class,
     ],
 ];
