@@ -12,19 +12,20 @@ class ConfigAction
     /** @var  DataEntity */
     protected $config;
 
+
     /**
      * Invoke Config
      *
      * @param null $confKey
-     * 
-     * @return DataEntity|mixed
-     * @throws \Exception
+     * @param null $default
+     *
+     * @return mixed|DataEntity
      */
-    function __invoke($confKey = null)
+    function __invoke($confKey = null, $default = null)
     {
         $config = $this->_attainSapiConfig();
         if ($confKey !== null)
-            $config = $config->get($confKey);
+            $config = $config->get($confKey, $default);
 
         return $config;
     }
@@ -34,7 +35,7 @@ class ConfigAction
     
     protected function _attainSapiConfig()
     {
-        if (!$this->config) {
+        if (! $this->config ) {
             /** @var aSapi $sapi */
             $services = $this->services; 
             $sapi     = $services->get('/sapi');

@@ -8,15 +8,12 @@ use Poirot\Std\Type\StdArray;
 
 
 /**
- * Detect Server Url, BasePath, BaseUrl
- * can retrieved as a service
- *
  * PathAction \Module\Foundation\Actions::Path()->assemble('$baseUrl');
  */
 class PathService
     extends aServiceContainer
 {
-    const CONF = 'module.foundation.path-service';
+    const CONF = 'module.foundation.path';
          
     /**
      * @var string Service Name

@@ -1,7 +1,5 @@
 <?php
 use Module\Foundation\ServiceManager\ViewModelRenderer;
-use Poirot\Ioc\Container\Service\ServiceInstance;
-
 
 return [
     'implementations' => [
@@ -10,8 +8,8 @@ return [
         'ViewModelResolver' => \Poirot\Loader\LoaderAggregate::class,
     ],
     'services' => [
-        \Module\Foundation\ServiceManager\ServiceViewModel::class,
-            'viewModelRenderer' => ViewModelRenderer::class,
-            \Module\Foundation\ServiceManager\ServiceViewModelResolver::class,
+        'ViewModel' => \Module\Foundation\ServiceManager\ServiceViewModel::class,
+          'ViewModelRenderer' => ViewModelRenderer::class,
+          'ViewModelResolver' => \Module\Foundation\ServiceManager\ServiceViewModelResolver::class,
     ],
 ];

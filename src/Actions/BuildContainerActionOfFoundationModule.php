@@ -16,8 +16,8 @@ class BuildContainerActionOfFoundationModule
 
     protected $services = [
         ## Helpers
-        'view'          => ViewService::class,
-        'config'        => ConfigAction::class,
-        'cycle'         => CycleAction::class,
+        'view'   => ViewService::class,
+        'config' => ConfigAction::class,
+        'cycle'  => CycleAction::class,
     ];
 }

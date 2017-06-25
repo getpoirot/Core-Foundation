@@ -1,6 +1,12 @@
 <?php
 namespace Module\Foundation
 {
+
+    use Module\Foundation\Actions\Helper\ConfigAction;
+    use Module\Foundation\Actions\Helper\CycleAction;
+    use Module\Foundation\Actions\Helper\ViewService;
+    use Module\Foundation\ServiceManager\ServiceViewModel;
+    use Module\Foundation\Services\PathService;
     use Poirot\Application\Interfaces\Sapi\iSapiModule;
     use Poirot\Application\Interfaces\Sapi;
     use Poirot\Application\Sapi\Module\ContainerForFeatureActions;
@@ -9,17 +15,39 @@ namespace Module\Foundation
     use Poirot\Loader\Autoloader\LoaderAutoloadAggregate;
     use Poirot\Loader\Autoloader\LoaderAutoloadNamespace;
     use Poirot\Loader\Interfaces\iLoaderAutoload;
-    use Poirot\Std\Interfaces\Struct\iDataEntity;
 
     use Module\Foundation\Actions\BuildContainerActionOfFoundationModule;
 
+
+    /**
+     * - Provide Base Services in Service Manager:
+     *   ViewModel (two step view) accompaniment with two others services
+     *   include ViewModelRenderer and ViewModelResolver
+     *
+     *   @see ServiceViewModel
+     *
+     *
+     * - Provide Action Helpers:
+     *   @see ConfigAction
+     *   @see CycleAction
+     *   @see PathService
+     *   @see ViewService
+     *
+     *   @see BuildContainerActionOfFoundationModule
+     *
+     *
+     * - Path as a Service:
+     *   set Variable into path and use it to retrieve path prefix,
+     *   it can be configured from merged config by modules.
+     *
+     *   @see PathService
+     */
 
     class Module implements iSapiModule
         , Sapi\Module\Feature\iFeatureModuleAutoload
         , Sapi\Module\Feature\iFeatureModuleInitServices
         , Sapi\Module\Feature\iFeatureModuleNestServices
         , Sapi\Module\Feature\iFeatureModuleNestActions
-        , Sapi\Module\Feature\iFeatureModuleMergeConfig
     {
         /**
          * Register class autoload on Autoload
@@ -40,30 +68,13 @@ namespace Module\Foundation
         }
 
         /**
-         * Register config key/value
-         *
-         * priority: 1000 D
-         *
-         * - you may return an array or Traversable
-         *   that would be merge with config current data
-         *
-         * @param iDataEntity $config
-         *
-         * @return array|\Traversable
-         */
-        function initConfig(iDataEntity $config)
-        {
-            return \Poirot\Config\load(__DIR__ . '/../config/cor-foundation');
-        }
-
-        /**
          * Build Service Container
          *
          * priority: 1000 X
          *
          * - register services
          * - define aliases
-         * - add initializers
+         * - add initializer(s)
          * - ...
          *
          * @param Container $services
@@ -111,14 +122,15 @@ namespace Module\Foundation
 
 namespace Module\Foundation
 {
-    use Module\Foundation\Actions\Helper\CycleAction;
+
     use Module\Foundation\Actions\Helper\ViewAction;
     use Module\Foundation\Services\PathService\PathAction;
 
     /**
-     * @method static ViewAction         view($template = null, $variables = null)
-     * @method static PathAction         path($pathString = null, $variables = array())
-     * @method static CycleAction        cycle($action = null, $steps = 1, $reset = true)
+     * @method static ConfigAction config($confKey = null, $default = null)
+     * @method static CycleAction  cycle($action = null, $steps = 1, $reset = true)
+     * @method static PathAction   path($pathString = null, $variables = array())
+     * @method static ViewAction   view($template = null, $variables = null)
      */
     class Actions extends \IOC
     { }
