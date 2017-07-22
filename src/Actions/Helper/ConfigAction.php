@@ -14,18 +14,34 @@ class ConfigAction
 
 
     /**
-     * Invoke Config
+     * Get Config Values
      *
-     * @param null $confKey
-     * @param null $default
+     * Argument can passed and map to config if exists [$key][$_][$__] ..
      *
-     * @return mixed|DataEntity
+     * @param $key
+     * @param null $_
+     *
+     * @return mixed|null|DataEntity
      */
-    function __invoke($confKey = null, $default = null)
+    function __invoke($key = null, $_ = null)
     {
         $config = $this->_attainSapiConfig();
-        if ($confKey !== null)
-            $config = $config->get($confKey, $default);
+        if ($key === null)
+            // Just Return Config Instance
+            return $config;
+
+
+        /** @var DataEntity $config */
+        $config   = $config->get($key, array());
+        $keyconfs = func_get_args();
+        array_shift($keyconfs);
+
+        foreach ($keyconfs as $key) {
+            if (! isset($config[$key]) )
+                return null;
+
+            $config = $config[$key];
+        }
 
         return $config;
     }
