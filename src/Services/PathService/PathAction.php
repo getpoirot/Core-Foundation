@@ -43,7 +43,7 @@ class PathAction
     {
         $funcArgs = func_get_args();
 
-        if (empty($funcArgs))
+        if ( empty($funcArgs) )
             ## path()
             return $this;
 
@@ -53,8 +53,20 @@ class PathAction
         ## path($name, ..)
         $name = array_shift($funcArgs);
 
-        if ($this->hasPath($name))
+        if ( $this->hasPath($name) ) {
             $uri = $this->getPath($name);
+            if ($uri instanceof \Closure) {
+                // Bind given closure into this class
+                $uri = \Closure::bind( $uri
+                    , $this
+                    , get_class($this)
+                );
+            }
+
+            if ( is_callable($uri) )
+                $uri = call_user_func_array($uri, $funcArgs);
+
+        }
         else
             ## we don't have pathName, assume that entered text is uri
             $uri = $name;
@@ -80,22 +92,25 @@ class PathAction
     /**
      * Set path uri alias
      *
-     * @param string $name
-     * @param string $uri
-     * @param bool   $isRestricted
+     * $uri
+     * function($args) : string
+     *
+     * @param string          $name
+     * @param string|callable $uri
+     * @param bool            $isRestricted
      *
      * @throws \Exception
      * @return $this
      */
     function setPath($name, $uri, $isRestricted = false)
     {
-        if ($this->hasPath($name) && $this->_isRestricted($name))
+        if ( $this->hasPath($name) && $this->_isRestricted($name) )
             throw new \Exception(
                 sprintf('Path with name (%s) already exists and not allow override it.', $name)
             );
 
         $n = $this->_normalizeName($name);
-        $this->paths[$n] = (string) $uri;
+        $this->paths[$n] = (is_callable($uri)) ? $uri : (string) $uri;
         (!$isRestricted) ?: $this->__restricted[$n] = true;
 
         return $this;
@@ -106,12 +121,12 @@ class PathAction
      *
      * @param string $name
      *
-     * @return mixed
+     * @return string|callable
      * @throws \Exception
      */
     function getPath($name)
     {
-        if (!$this->hasPath($name))
+        if (! $this->hasPath($name) )
             throw new \Exception(sprintf('Path with name (%s) not found.', $name));
 
         $n = $this->_normalizeName($name);
@@ -223,9 +238,9 @@ class PathAction
      * @throws \Exception
      * @return mixed
      */
-    function assemble($uri, array $vars = array())
+    function assemble($uri, array $vars = [])
     {
-        if (!empty($vars) && array_values($vars) == $vars)
+        if ( !empty($vars) && array_values($vars) == $vars )
             throw new \Exception('Variable Arrays Must Be Associated.');
 
         /**
