@@ -37,6 +37,9 @@ class ConfigAction
         array_shift($keyconfs);
 
         foreach ($keyconfs as $key) {
+            if ($key === null)
+                continue;
+
             if (! isset($config[$key]) )
                 return null;
 
