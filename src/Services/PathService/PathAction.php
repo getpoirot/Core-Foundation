@@ -326,8 +326,8 @@ class PathAction
     {
         if (!static::isConfigurableWith($optionsResource))
             throw new \InvalidArgumentException(sprintf(
-                'Invalid Configuration Resource provided; given: (%s).'
-                , \Poirot\Std\flatten($optionsResource)
+                'Invalid Configuration Resource provided on (%s); given: (%s).'
+                , static::class, \Poirot\Std\flatten($optionsResource)
             ));
 
         // ..
