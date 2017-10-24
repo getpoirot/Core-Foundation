@@ -157,6 +157,11 @@ abstract class aAction
             return $this->_currModule;
 
         $path   = $this->services()->getPath();
+        if ( empty($path) )
+            throw new \RuntimeException(
+                'Service Path Not Recognized; Maybe You Use This Action Directly; Not Through IOC.'
+            );
+
         $exPath = explode('/', $path);
         if (!$exPath[1] === 'module')
             throw new \Exception("Module Container Structure is Unknown By Actions. given: ($path).");
