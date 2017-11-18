@@ -52,29 +52,13 @@ class CycleAction
         if ($reset && $currentCycle->getCounter() >= max($currentCycle->steps))
             $currentCycle->reset();
 
-        if ($currentCycle->hasMetStep()) {
+        if ($currentCycle->hasMetStep())
             ## step met and must be invoked
-            $currentCycle->call();
-        }
+            $currentCycle->call($currentCycle->getCounter());
+
 
         $currentCycle->increment();
         return $currentCycle;
-    }
-
-    function call()
-    {
-        $action = $this->action;
-        if (is_string($action))
-            $action = function () {
-                echo $this->action;
-            };
-
-        return call_user_func($action);
-    }
-
-    function __toString()
-    {
-        return (string) $this->call();
     }
 
     /**
@@ -136,8 +120,29 @@ class CycleAction
     function setDependent(CycleAction $cycle)
     {
         $this->dependent = $cycle;
-
         return $this;
+    }
+
+
+    function __toString()
+    {
+        /** @var CycleAction $currentCycle */
+        $currentCycle = self::$_cycle_actions[$this->_getCycleIdentifier()];
+        return (string) $currentCycle->call( $currentCycle->getCounter() );
+    }
+
+
+    // ..
+
+    protected function call($stepCounter = null)
+    {
+        $action = $this->action;
+        if (is_string($action))
+            $action = function () {
+                echo $this->action;
+            };
+
+        return call_user_func($action, $stepCounter);
     }
 
     protected function _registerCycleAction($action, $steps)
