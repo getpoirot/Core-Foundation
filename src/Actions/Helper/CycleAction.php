@@ -57,7 +57,6 @@ class CycleAction
             $currentCycle->call($currentCycle->getCounter());
 
 
-        $currentCycle->increment();
         return $currentCycle;
     }
 
@@ -128,7 +127,10 @@ class CycleAction
     {
         /** @var CycleAction $currentCycle */
         $currentCycle = self::$_cycle_actions[$this->_getCycleIdentifier()];
-        return (string) $currentCycle->call( $currentCycle->getCounter() );
+        $result = (string) $currentCycle->call( $currentCycle->getCounter() );
+
+        $this->increment();
+        return $result;
     }
 
 
