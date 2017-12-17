@@ -8,7 +8,7 @@ return [
         'ViewModelResolver' => \Poirot\Loader\LoaderAggregate::class,
     ],
     'services' => [
-        'ViewModel' => \Module\Foundation\ServiceManager\ServiceViewModel::class,
+          'ViewModel'         => \Module\Foundation\ServiceManager\ServiceViewModel::class,
           'ViewModelRenderer' => ViewModelRenderer::class,
           'ViewModelResolver' => \Module\Foundation\ServiceManager\ServiceViewModelResolver::class,
     ],
