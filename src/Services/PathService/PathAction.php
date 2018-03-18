@@ -233,17 +233,26 @@ class PathAction
      *   ['variable' => function() { return 'fetched-value'; }]
      *
      * @param string $uri  Uri or Registered Path
-     * @param array  $vars
+     * @param array  $availVariables
      *
      * @throws \Exception
      * @return mixed
      */
-    function assemble($uri, array $vars = [])
+    function assemble($uri, array $availVariables = [])
     {
-        if ( !empty($vars) && array_values($vars) == $vars )
+        if ( !empty($availVariables) && array_values($availVariables) == $availVariables )
             throw new \Exception('Variable Arrays Must Be Associated.');
 
-        /**
+        /*
+         * [
+             0 => [
+                "$baseUrl"
+             ]
+             1 => [
+                "baseUrl"
+             ]
+           ]
+         *
          * $matches[0] retrun array of full variables matched, exp. $path
          * $matches[1] retrun array of variables name matched, exp. path
          */
@@ -253,30 +262,53 @@ class PathAction
             // we don't have any variable in uri
             return $uri;
 
-        $vars = array_merge(\Poirot\Std\cast($this->variables())->toArray(), $vars);
 
-        // correct order of variables
+        $availVariables = array_merge(
+            \Poirot\Std\cast($this->variables())->toArray()
+            , $availVariables
+        );
+
+
+        // Build order of variables
         // 'path' => 'ValuablePath' TO 0 => 'ValuablePath'
-        foreach ($matches[1] as $i => $var) {
-            if (! array_key_exists($var, $vars))
+        //
+        foreach ($matches[1] as $i => $var)
+        {
+            if (! array_key_exists($var, $availVariables) )
                 throw new \Exception(sprintf(
-                    'Value of variable (%s) is not defined.', $var
-                ));
+                    'Value of variable (%s) is not passed as properties.', $var ));
 
-            $currValue = $vars[$var];
+            $currValue = $availVariables[$var];
             if ($currValue instanceof \Closure)
                 $currValue = $currValue();
 
-            $vars[$i]  = $currValue;
-            unset($vars[$var]);
+
+            $availVariables[$i]   = $currValue;
+            $availVariables['$'.$var] = $currValue;
+            #unset($availVariables[$var]); with explode
         }
+
 
         // replace variables to uri
-        foreach ($matches[0] as $i => $inUriVar) {
-            $uri = preg_replace('/\\'.$inUriVar.'/', $vars[$i], $uri, 1);
+        //
+        $expUri = explode('/', $uri);
+        foreach ($expUri as $i => $segment) {
+            if ( isset($availVariables[$segment]) ) {
+                ## Only if empty variable passed not for http://
+                #
+                $expUri[$i] = $availVariables[$segment];
+                if ($expUri[$i] === '' || $expUri[$i] === null)
+                    unset($expUri[$i]);
+            }
         }
 
-        return $uri;
+        # with explode
+        #foreach ($matches[0] as $i => $inUriVar) {
+        #    $uri = preg_replace('/\\'.$inUriVar.'/', $availVariables[$i], $uri, 1);
+        #}
+
+
+        return rtrim(implode('/', $expUri), '/');
     }
 
     /**
