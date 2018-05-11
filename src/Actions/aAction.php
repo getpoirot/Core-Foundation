@@ -1,10 +1,10 @@
 <?php
 namespace Module\Foundation\Actions;
 
+use Poirot\Ioc\Container;
 use Poirot\Application\Interfaces\Sapi\iSapiServer;
 use Poirot\Application\Sapi\Module\ContainerForFeatureActions;
 use Poirot\Application\Sapi;
-use Poirot\Ioc\Container;
 use Poirot\Ioc\Interfaces\iContainer;
 use Poirot\Ioc\Interfaces\Respec\iServicesAware;
 use Poirot\Ioc\Interfaces\Respec\iServicesProvider;
