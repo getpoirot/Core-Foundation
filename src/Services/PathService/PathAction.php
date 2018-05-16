@@ -289,16 +289,17 @@ class PathAction
         }
 
 
-        // TODO "\$baseUrl/www/", none baseurl should be "/www" but is "www"
         // replace variables to uri
         //
         $expUri = explode('/', $uri);
         foreach ($expUri as $i => $segment) {
             if ( isset($availVariables[$segment]) ) {
-                ## Only if empty variable passed not for http://
-                #
+                // Only if empty variable passed not for http://
+                //
+                // "\$baseUrl/www/", none baseurl should be "/www" but is "www"
+                // i = 0
                 $expUri[$i] = $availVariables[$segment];
-                if ($expUri[$i] === '' || $expUri[$i] === null)
+                if ($i !== 0 && ($expUri[$i] === '' || $expUri[$i] === null) )
                     unset($expUri[$i]);
             }
         }
