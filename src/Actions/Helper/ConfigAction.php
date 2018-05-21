@@ -6,6 +6,9 @@ use Poirot\Application\aSapi;
 use Poirot\Std\Struct\DataEntity;
 
 
+// TODO third argument will not pass to action
+// $conf = \Module\Foundation\Actions::config(\Module\QueueDriver\Module::CONF, 'worker', 'workers');
+
 class ConfigAction 
     extends aAction
 {
