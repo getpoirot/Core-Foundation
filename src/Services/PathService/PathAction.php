@@ -63,8 +63,12 @@ class PathAction
                 );
             }
 
-            if ( is_callable($uri) )
-                $uri = call_user_func_array($uri, $funcArgs);
+            if ( is_callable($uri) ) {
+                if ( empty($funcArgs) )
+                    $uri = call_user_func($uri);
+                else
+                    $uri = call_user_func_array($uri, $funcArgs);
+            }
 
         }
         else
@@ -75,6 +79,7 @@ class PathAction
         // assemble uri with given arguments as variables:
 
         array_unshift($funcArgs, $uri); ### we want uri as first argument
+
         ## assemble($uri, ..arguments)
         $assembledUri = call_user_func_array(
             array($this, 'assemble')
