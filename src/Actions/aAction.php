@@ -1,6 +1,7 @@
 <?php
 namespace Module\Foundation\Actions;
 
+use Module\HttpFoundation\Events\Listener\ListenerDispatchResult;
 use Poirot\Ioc\Container;
 use Poirot\Application\Interfaces\Sapi\iSapiServer;
 use Poirot\Application\Sapi\Module\ContainerForFeatureActions;
@@ -22,6 +23,20 @@ abstract class aAction
 
     abstract function __invoke();
 
+
+    /**
+     * Respond Result
+     *
+     * @param $result
+     *
+     * @return array
+     */
+    function respondResult($result)
+    {
+        return [
+            ListenerDispatchResult::RESULT_DISPATCH => $result,
+        ];
+    }
 
     /**
      * Switch Another Module Actions
