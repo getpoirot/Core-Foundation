@@ -93,6 +93,16 @@ class ViewAction
         return $this;
     }
 
+    /**
+     * Get view model itself
+     *
+     * @return ViewModelTemplate
+     */
+    function getViewModel()
+    {
+        return $this->viewModel;
+    }
+
     protected function _renderException($e)
     {
         $eClass = get_class($e);
