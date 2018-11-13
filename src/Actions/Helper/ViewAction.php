@@ -52,7 +52,7 @@ class ViewAction
      */
     function render()
     {
-        return $this->viewModel->render();
+        return (string) $this->viewModel->render();
     }
 
     function __toString()
@@ -103,6 +103,10 @@ class ViewAction
         return $this->viewModel;
     }
 
+    /**
+     * @param \Exception $e
+     * @return string
+     */
     protected function _renderException($e)
     {
         $eClass = get_class($e);
