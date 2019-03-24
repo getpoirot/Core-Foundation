@@ -1,7 +1,6 @@
 <?php
 namespace Module\Foundation
 {
-
     use Module\Foundation\Actions\Helper\ConfigAction;
     use Module\Foundation\Actions\Helper\CycleAction;
     use Module\Foundation\Actions\Helper\ViewService;
@@ -9,12 +8,9 @@ namespace Module\Foundation
     use Module\Foundation\Services\PathService;
     use Poirot\Application\Interfaces\Sapi\iSapiModule;
     use Poirot\Application\Interfaces\Sapi;
-    use Poirot\Application\Sapi\Module\ContainerForFeatureActions;
     use Poirot\Ioc\Container;
-    use Poirot\Ioc\Container\BuildContainer;
     use Poirot\Loader\Autoloader\LoaderAutoloadAggregate;
     use Poirot\Loader\Autoloader\LoaderAutoloadNamespace;
-    use Poirot\Loader\Interfaces\iLoaderAutoload;
 
     use Module\Foundation\Actions\BuildContainerActionOfFoundationModule;
 
@@ -50,36 +46,17 @@ namespace Module\Foundation
         , Sapi\Module\Feature\iFeatureModuleNestActions
     {
         /**
-         * Register class autoload on Autoload
-         *
-         * priority: 1000 B
-         *
-         * @param LoaderAutoloadAggregate $baseAutoloader
-         *
-         * @return iLoaderAutoload|array|\Traversable|void
+         * @inheritdoc
          */
         function initAutoload(LoaderAutoloadAggregate $baseAutoloader)
         {
-            #$nameSpaceLoader = \Poirot\Loader\Autoloader\LoaderAutoloadNamespace::class;
-            $nameSpaceLoader = 'Poirot\Loader\Autoloader\LoaderAutoloadNamespace';
             /** @var LoaderAutoloadNamespace $nameSpaceLoader */
-            $nameSpaceLoader = $baseAutoloader->loader($nameSpaceLoader);
+            $nameSpaceLoader = $baseAutoloader->loader(LoaderAutoloadNamespace::class);
             $nameSpaceLoader->addResource(__NAMESPACE__, __DIR__);
         }
 
         /**
-         * Build Service Container
-         *
-         * priority: 1000 X
-         *
-         * - register services
-         * - define aliases
-         * - add initializer(s)
-         * - ...
-         *
-         * @param Container $services
-         *
-         * @return array|\Traversable|void Container Builder Config
+         * @inheritdoc
          */
         function initServiceManager(Container $services)
         {
@@ -87,16 +64,7 @@ namespace Module\Foundation
         }
 
         /**
-         * Get Nested Module Services
-         *
-         * it can be used to manipulate other registered services by modules
-         * with passed Container instance as argument.
-         *
-         * priority not that serious
-         *
-         * @param Container $moduleContainer
-         *
-         * @return null|array|BuildContainer|\Traversable
+         * @inheritdoc
          */
         function getServices(Container $moduleContainer = null)
         {
@@ -104,13 +72,7 @@ namespace Module\Foundation
         }
 
         /**
-         * Get Action Services
-         *
-         * priority: after GrabRegisteredServices
-         *
-         * - return Array used to Build ModuleActionsContainer
-         *
-         * @return array|ContainerForFeatureActions|BuildContainer|\Traversable
+         * @inheritdoc
          */
         function getActions()
         {

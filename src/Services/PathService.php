@@ -47,11 +47,12 @@ class PathService
      */
     protected $name = 'path';
 
-    
+
     /**
      * Create Service
      *
      * @return PathAction|callable
+     * @throws \Exception
      */
     function newService()
     {
@@ -64,7 +65,7 @@ class PathService
         $config = $services->get('/sapi')->config();
         $config = $config->get(self::CONF, array());
         // strip null values from config
-        $stdTrav = new StdArray($config);
+        $stdTrav = new StdArray($config->toArray());
         $config  = $stdTrav->withWalk(function($val) {
             return $val === null; // null values not saved
         }, true);
