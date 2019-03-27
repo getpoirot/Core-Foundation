@@ -38,6 +38,7 @@ class PathAction
      * @param null $arg
      *
      * @return $this
+     * @throws \Exception
      */
     function __invoke()
     {

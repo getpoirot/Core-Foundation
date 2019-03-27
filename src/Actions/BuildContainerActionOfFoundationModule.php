@@ -10,14 +10,18 @@ use Poirot\Ioc\Container\BuildContainer;
 class BuildContainerActionOfFoundationModule
     extends BuildContainer
 {
-    protected $extends = [
-        'path' => '/module/Foundation/services/path'
-    ];
+    protected function __init()
+    {
+        $this->setExtends([
+            'path' => '/module/Foundation/services/path',
+        ]);
 
-    protected $services = [
-        ## Helpers
-        'view'   => ViewService::class,
-        'config' => ConfigAction::class,
-        'cycle'  => CycleAction::class,
-    ];
+
+        $this->setServices([
+            ## Helpers
+            'view'   => ViewService::class,
+            'config' => ConfigAction::class,
+            'cycle'  => CycleAction::class,
+        ]);
+    }
 }
