@@ -13,6 +13,7 @@ namespace Module\Foundation
     use Poirot\Loader\Autoloader\LoaderAutoloadNamespace;
 
     use Module\Foundation\Actions\BuildContainerActionOfFoundationModule;
+    use Poirot\Std\Interfaces\Struct\iDataEntity;
 
 
     /**
@@ -37,12 +38,17 @@ namespace Module\Foundation
      *   it can be configured from merged config by modules.
      *
      *   @see PathService
+     *
+     *
+     * - Configuration:
+     *   module is configurable by override "cor-foundation"
+     *
      */
-
     class Module implements iSapiModule
         , Sapi\Module\Feature\iFeatureModuleAutoload
         , Sapi\Module\Feature\iFeatureModuleInitServices
         , Sapi\Module\Feature\iFeatureModuleNestServices
+        , Sapi\Module\Feature\iFeatureModuleMergeConfig
         , Sapi\Module\Feature\iFeatureModuleNestActions
     {
         /**
@@ -60,7 +66,8 @@ namespace Module\Foundation
          */
         function initServiceManager(Container $services)
         {
-            return \Poirot\Config\load(__DIR__ . '/../config/cor-foundation.servicemanager');
+            $cnf = include __DIR__ . '/../config/cor-foundation.servicemanager.conf.php';
+            return $cnf;
         }
 
         /**
@@ -68,7 +75,16 @@ namespace Module\Foundation
          */
         function getServices(Container $moduleContainer = null)
         {
-            return \Poirot\Config\load(__DIR__ . '/../config/cor-foundation.services');
+            $cnf = include __DIR__ . '/../config/cor-foundation.services.conf.php';
+            return $cnf;
+        }
+
+        /**
+         * @inheritdoc
+         */
+        function initConfig(iDataEntity $config)
+        {
+            return \Poirot\Config\load(__DIR__ . '/../config/cor-foundation');
         }
 
         /**
@@ -81,28 +97,3 @@ namespace Module\Foundation
     }
 }
 
-
-namespace Module\Foundation
-{
-
-    use Module\Foundation\Actions\Helper\ViewAction;
-    use Module\Foundation\Services\PathService\PathAction;
-
-    /**
-     * @method static ConfigAction config($key = null, $_ = null)
-     * @method static CycleAction  cycle($action = null, $steps = 1, $reset = true)
-     * @method static PathAction   path($pathString = null, $variables = array())
-     * @method static ViewAction   view($template = null, $variables = null)
-     */
-    class Actions extends \IOC
-    { }
-}
-
-namespace Module\Foundation
-{
-    /**
-     * @method static PathAction Path()
-     */
-    class Services extends \IOC
-    { }
-}
