@@ -4,7 +4,6 @@ namespace Module\Foundation\Services;
 use Module\Foundation\Services\PathService\PathAction;
 use Poirot\Ioc\Container\Service\aServiceContainer;
 use Poirot\Std\Struct\DataEntity;
-use Poirot\Std\Type\StdArray;
 
 /*
  Merged Config:
@@ -40,7 +39,7 @@ use Poirot\Std\Type\StdArray;
 class PathService
     extends aServiceContainer
 {
-    const CONF = 'module.foundation.path';
+    const CONF = 'path';
          
     /**
      * @var string Service Name
@@ -58,19 +57,27 @@ class PathService
     {
         $pathAction = new PathAction;
 
+        return $this->_buildFromMergedConf($pathAction);
+    }
 
-        # build with merged config
+
+    // ..
+
+    /**
+     * Build with merged config
+     *
+     * @param PathAction $pathAction
+     *
+     * @return PathAction
+     * @throws \Exception
+     */
+    private function _buildFromMergedConf(PathAction $pathAction)
+    {
         /** @var DataEntity $config */
         $services = $this->services();
-        $config = $services->get('/sapi')->config();
-        $config = $config->get(self::CONF, array());
-        // strip null values from config
-        $stdTrav = new StdArray($config->toArray());
-        $config  = $stdTrav->withWalk(function($val) {
-            return $val === null; // null values not saved
-        }, true);
+        $config   = $services->get('/sapi')->config();
+        $config   = $config->{\Module\Foundation\Module::class}->path;
 
-        // Rewrite Default Variables If Config Set
         $pathAction->with( $pathAction::parseWith($config) );
         return $pathAction;
     }
