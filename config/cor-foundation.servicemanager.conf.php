@@ -5,7 +5,7 @@ return [
     'implementations' => [
         'ViewModel'         => \Poirot\View\Interfaces\iViewModel::class,
         'ViewModelRenderer' => \Poirot\View\Interfaces\iViewRenderer::class,
-        'ViewModelResolver' => \Poirot\Loader\LoaderAggregate::class,
+        'ViewModelResolver' => \Module\Foundation\View\ViewModelResolver::class,
     ],
     'services' => [
           'ViewModel'         => \Module\Foundation\ServiceManager\ServiceViewModel::class,

@@ -34,24 +34,20 @@ class ServiceViewModel
 
         # PHP Step as first step of view Renderer:
 
-        $bind = DecorateViewModel::of(
-            clone $view
-            , $this->_funcDelegateRender()
-            , $this->_funcAssertResult()
+        $bind = new (DecorateViewModel($view, $this->_funcDelegateRender(), $this->_funcAssertResult()))
+            ->setRenderer(function($template, $vars) use ($view) {
+                $renderer = $view->renderer();
 
-        ) -> setRenderer(function($template, $vars) use ($view) {
-            $renderer = $view->renderer();
+                if (substr($template, -3) == 'php' && ! file_exists($template) )
+                    ## the two step is optional and can be avoided.
+                    return null;
 
-            if (substr($template, -3) == 'php' && ! file_exists($template) )
-                ## the two step is optional and can be avoided.
-                return null;
+                ## This result will merge on assert render result feature
+                $result = $renderer->capture($template, $vars);
+                return $result;
+            });
 
-            ## This result will merge on assert render result feature
-            $result = $renderer->capture($template, $vars);
-            return $result;
-        });
-
-        $view = DecorateViewModel::of($view)
+        $view = new (DecorateViewModel($view))
             ->bind($bind, 1000); // render before all others children
 
         return $view;

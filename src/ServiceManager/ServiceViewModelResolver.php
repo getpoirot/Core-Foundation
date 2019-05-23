@@ -1,9 +1,9 @@
 <?php
 namespace Module\Foundation\ServiceManager;
 
+use Module\Foundation\View\ViewModelResolver;
 use Poirot\Ioc\Container\Service\aServiceContainer;
 
-use Poirot\Loader\LoaderAggregate;
 use Poirot\Loader\LoaderMapResource;
 use Poirot\Loader\LoaderNamespaceStack;
 
@@ -21,11 +21,11 @@ class ServiceViewModelResolver
     /**
      * Create Service
      *
-     * @return LoaderAggregate
+     * @return ViewModelResolver
      */
     function newService()
     {
-        $loader = new LoaderAggregate;
+        $loader = new ViewModelResolver;
         $loader->attach(new LoaderMapResource, 500);
         $loader->attach(new LoaderNamespaceStack(null, function($name, $resource, $match) {
                 return \Poirot\Loader\funcWatchFileExists($name, $resource, $match, '.'.$this->_layout_extension);
