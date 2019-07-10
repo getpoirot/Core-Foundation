@@ -1,19 +1,19 @@
 <?php
 namespace Module\Foundation
 {
-    use Module\Foundation\Actions\Helper\ConfigAction;
-    use Module\Foundation\Actions\Helper\CycleAction;
-    use Module\Foundation\Actions\Helper\ViewService;
-    use Module\Foundation\ServiceManager\ServiceViewModel;
-    use Module\Foundation\Services\PathService;
     use Poirot\Application\Interfaces\Sapi\iSapiModule;
     use Poirot\Application\Interfaces\Sapi;
     use Poirot\Ioc\Container;
     use Poirot\Loader\Autoloader\LoaderAutoloadAggregate;
     use Poirot\Loader\Autoloader\LoaderAutoloadNamespace;
+    use Poirot\Std\Interfaces\Struct\iDataEntity;
 
     use Module\Foundation\Actions\BuildContainerActionOfFoundationModule;
-    use Poirot\Std\Interfaces\Struct\iDataEntity;
+    use Module\Foundation\Actions\Helper\ConfigAction;
+    use Module\Foundation\Actions\Helper\CycleAction;
+    use Module\Foundation\Actions\Helper\ViewService;
+    use Module\Foundation\ServiceManager\ServiceViewModel;
+    use Module\Foundation\Services\PathService;
 
 
     /**
@@ -96,4 +96,3 @@ namespace Module\Foundation
         }
     }
 }
-
