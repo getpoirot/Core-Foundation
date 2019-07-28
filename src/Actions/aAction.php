@@ -3,7 +3,6 @@ namespace Module\Foundation\Actions;
 
 use Module\HttpFoundation\Events\Listener\ListenerDispatchResult;
 use Poirot\Ioc\Container;
-use Poirot\Application\Interfaces\Sapi\iSapiServer;
 use Poirot\Application\Sapi\Module\ContainerForFeatureActions;
 use Poirot\Application\Sapi;
 use Poirot\Ioc\Interfaces\iContainer;
@@ -68,7 +67,7 @@ abstract class aAction
     /**
      * Sapi Server
      *
-     * @return iSapiServer|Sapi
+     * @return Sapi
      */
     function sapi()
     {
