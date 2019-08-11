@@ -1,5 +1,5 @@
 <?php
-use Module\Foundation\ServiceManager\ViewModelRenderer;
+use \Module\Foundation\ServiceManager;
 
 return [
     'implementations' => [
@@ -8,8 +8,8 @@ return [
         'ViewModelResolver' => \Module\Foundation\View\ViewModelResolver::class,
     ],
     'services' => [
-          'ViewModel'         => \Module\Foundation\ServiceManager\ServiceViewModel::class,
-          'ViewModelRenderer' => ViewModelRenderer::class,
-          'ViewModelResolver' => \Module\Foundation\ServiceManager\ServiceViewModelResolver::class,
+          'ViewModel'         => ServiceManager\ServiceViewModel::class,
+          'ViewModelRenderer' => ServiceManager\ViewModelRenderer::class,
+          'ViewModelResolver' => ServiceManager\ServiceViewModelResolver::class,
     ],
 ];
